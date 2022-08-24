@@ -114,7 +114,19 @@ export class UsersController {
   }
 
   @Delete(':id')
-  public delete(): any {
-    return { data: 'Delete!!' };
+  public async delete(
+    @Param('id', ParseUUIDPipe) id: string
+  ): Promise<{ data: string }> {
+    const user = await this.model.findOne({
+      where: { id },
+    });
+
+    if (!user) {
+      throw new NotFoundException({ description: 'User not found.' });
+    }
+
+    await this.model.delete({ id });
+
+    return { data: 'User deleted with success.' };
   }
 }
