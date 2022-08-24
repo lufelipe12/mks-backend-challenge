@@ -5,6 +5,8 @@ import {
   Get,
   HttpException,
   HttpStatus,
+  Param,
+  ParseUUIDPipe,
   Patch,
   Post,
 } from '@nestjs/common';
@@ -31,6 +33,7 @@ export class UsersController {
         HttpStatus.CONFLICT
       );
     }
+
     const newUser = await this.model.save(body);
 
     return { data: newUser };
@@ -44,8 +47,14 @@ export class UsersController {
   }
 
   @Get(':id')
-  public getOne(): any {
-    return { data: 'Read!!' };
+  public async getOne(
+    @Param('id', ParseUUIDPipe) id: string
+  ): Promise<{ data: UserModel }> {
+    const user = await this.model.findOne({
+      where: { id },
+    });
+
+    return { data: user };
   }
 
   @Patch(':id')
