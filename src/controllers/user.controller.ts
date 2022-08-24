@@ -14,6 +14,7 @@ import {
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { hash } from 'bcryptjs';
+import { instanceToPlain } from 'class-transformer';
 
 import { UserModel } from 'src/models/user.model';
 import { UserSchema, UserUpdateSchema } from 'src/schemas/user.schema';
@@ -25,7 +26,7 @@ export class UsersController {
   ) {}
 
   @Post('/register')
-  public async create(@Body() body: UserSchema): Promise<{ data: UserModel }> {
+  public async create(@Body() body: UserSchema) {
     const emailExists = await this.model.findOne({
       where: { email: body.email },
     });
@@ -45,22 +46,22 @@ export class UsersController {
       password: hashedPassword,
     };
 
-    const newUser = await this.model.save(userToCreate);
+    const newUser = this.model.create(userToCreate);
 
-    return { data: newUser };
+    await this.model.save(newUser);
+
+    return instanceToPlain(newUser);
   }
 
   @Get()
-  public async getAll(): Promise<{ data: UserModel[] }> {
+  public async getAll() {
     const users = await this.model.find();
 
-    return { data: users };
+    return instanceToPlain(users);
   }
 
   @Get(':id')
-  public async getOne(
-    @Param('id', ParseUUIDPipe) id: string
-  ): Promise<{ data: UserModel }> {
+  public async getOne(@Param('id', ParseUUIDPipe) id: string) {
     const user = await this.model.findOne({
       where: { id },
     });
@@ -69,14 +70,14 @@ export class UsersController {
       throw new NotFoundException({ description: 'User not found.' });
     }
 
-    return { data: user };
+    return instanceToPlain(user);
   }
 
   @Patch(':id')
   public async update(
     @Param('id', ParseUUIDPipe) id: string,
     @Body() body: UserUpdateSchema
-  ): Promise<{ data: UserModel }> {
+  ) {
     const user = await this.model.findOne({
       where: { id },
     });
@@ -106,17 +107,15 @@ export class UsersController {
 
     await this.model.update({ id }, userToUpdate);
 
-    return {
-      data: await this.model.findOne({
+    return instanceToPlain(
+      await this.model.findOne({
         where: { id },
-      }),
-    };
+      })
+    );
   }
 
   @Delete(':id')
-  public async delete(
-    @Param('id', ParseUUIDPipe) id: string
-  ): Promise<{ data: string }> {
+  public async delete(@Param('id', ParseUUIDPipe) id: string) {
     const user = await this.model.findOne({
       where: { id },
     });
@@ -127,6 +126,6 @@ export class UsersController {
 
     await this.model.delete({ id });
 
-    return { data: 'User deleted with success.' };
+    return 'User deleted with success.';
   }
 }
