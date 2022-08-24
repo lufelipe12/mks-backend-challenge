@@ -1,3 +1,4 @@
+import { PartialType } from '@nestjs/mapped-types';
 import {
   IsEmail,
   IsNotEmpty,
@@ -23,3 +24,5 @@ export class UserSchema {
   @MaxLength(30)
   password: string;
 }
+
+export class UserUpdateSchema extends PartialType(UserSchema) {}

@@ -16,7 +16,7 @@ import { Repository } from 'typeorm';
 import { hash } from 'bcryptjs';
 
 import { UserModel } from 'src/models/user.model';
-import { UserSchema } from 'src/schemas/user.schema';
+import { UserSchema, UserUpdateSchema } from 'src/schemas/user.schema';
 
 @Controller('/users')
 export class UsersController {
@@ -26,11 +26,11 @@ export class UsersController {
 
   @Post('/register')
   public async create(@Body() body: UserSchema): Promise<{ data: UserModel }> {
-    const userExists = await this.model.findOne({
+    const emailExists = await this.model.findOne({
       where: { email: body.email },
     });
 
-    if (userExists) {
+    if (emailExists) {
       throw new HttpException(
         'An user with this email already exists',
         HttpStatus.CONFLICT
@@ -75,7 +75,7 @@ export class UsersController {
   @Patch(':id')
   public async update(
     @Param('id', ParseUUIDPipe) id: string,
-    @Body() body: UserSchema
+    @Body() body: UserUpdateSchema
   ): Promise<{ data: UserModel }> {
     const user = await this.model.findOne({
       where: { id },
@@ -85,7 +85,26 @@ export class UsersController {
       throw new NotFoundException({ description: 'User not found.' });
     }
 
-    await this.model.update({ id }, body);
+    if (body.email) {
+      const emailExists = await this.model.findOne({
+        where: { email: body.email },
+      });
+
+      if (emailExists) {
+        throw new HttpException(
+          'An user with this email already exists',
+          HttpStatus.CONFLICT
+        );
+      }
+    }
+
+    const userToUpdate = {
+      name: body.name,
+      email: body.email,
+      password: body.password ? await hash(body.password, 8) : user.password,
+    };
+
+    await this.model.update({ id }, userToUpdate);
 
     return {
       data: await this.model.findOne({
