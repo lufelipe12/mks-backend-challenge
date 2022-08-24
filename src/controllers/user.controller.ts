@@ -17,7 +17,7 @@ import { UsersService } from 'src/services/users/users.service';
 export class UsersController {
   constructor(private readonly usersService: UsersService) {}
 
-  @Post('/register')
+  @Post()
   public async store(@Body() body: UserSchema) {
     const newUser = await this.usersService.create(body);
 
@@ -52,6 +52,6 @@ export class UsersController {
   public async delete(@Param('id', ParseUUIDPipe) id: string) {
     const message = await this.usersService.delete(id);
 
-    return message;
+    return { message: message };
   }
 }
