@@ -1,15 +1,15 @@
-import { Column, Entity, PrimaryColumn } from 'typeorm';
+import { Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
 import { v4 as uuid } from 'uuid';
 
 @Entity()
 export class UserModel {
-  @PrimaryColumn('uuid')
+  @PrimaryGeneratedColumn('uuid')
   readonly id: string;
 
   @Column()
   name: string;
 
-  @Column()
+  @Column({ unique: true })
   email: string;
 
   @Column()
