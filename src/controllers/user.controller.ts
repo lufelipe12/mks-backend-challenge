@@ -5,15 +5,18 @@ import {
   Get,
   HttpException,
   HttpStatus,
+  NotFoundException,
   Param,
   ParseUUIDPipe,
   Patch,
   Post,
 } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
+import { Repository } from 'typeorm';
+import { hash } from 'bcryptjs';
+
 import { UserModel } from 'src/models/user.model';
 import { UserSchema } from 'src/schemas/user.schema';
-import { Repository } from 'typeorm';
 
 @Controller('/users')
 export class UsersController {
@@ -34,7 +37,15 @@ export class UsersController {
       );
     }
 
-    const newUser = await this.model.save(body);
+    const hashedPassword = await hash(body.password, 8);
+
+    const userToCreate = {
+      name: body.name,
+      email: body.email,
+      password: hashedPassword,
+    };
+
+    const newUser = await this.model.save(userToCreate);
 
     return { data: newUser };
   }
@@ -54,12 +65,33 @@ export class UsersController {
       where: { id },
     });
 
+    if (!user) {
+      throw new NotFoundException({ description: 'User not found.' });
+    }
+
     return { data: user };
   }
 
   @Patch(':id')
-  public update(): any {
-    return { data: 'Update!!' };
+  public async update(
+    @Param('id', ParseUUIDPipe) id: string,
+    @Body() body: UserSchema
+  ): Promise<{ data: UserModel }> {
+    const user = await this.model.findOne({
+      where: { id },
+    });
+
+    if (!user) {
+      throw new NotFoundException({ description: 'User not found.' });
+    }
+
+    await this.model.update({ id }, body);
+
+    return {
+      data: await this.model.findOne({
+        where: { id },
+      }),
+    };
   }
 
   @Delete(':id')
