@@ -7,7 +7,6 @@ import { UserModel } from 'src/models/user.model';
 import { AuthService } from '../services/sessions/auth.service';
 import { LocalStrategy } from 'src/strategies/local.strategy';
 import { JwtStategy } from 'src/strategies/jwt.strategy';
-import { jwtConstants } from 'src/constants/constants';
 import { UsersService } from 'src/services/users/users.service';
 import { SessionsController } from 'src/controllers/session.controller';
 @Module({
@@ -15,7 +14,7 @@ import { SessionsController } from 'src/controllers/session.controller';
     TypeOrmModule.forFeature([UserModel]),
     PassportModule,
     JwtModule.register({
-      secret: jwtConstants.secret,
+      secret: process.env.SECRET_KEY as string,
       signOptions: { expiresIn: '1d' },
     }),
   ],
