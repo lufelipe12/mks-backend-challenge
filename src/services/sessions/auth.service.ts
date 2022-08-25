@@ -1,42 +1,45 @@
-import { Injectable, NotFoundException } from '@nestjs/common';
+import { Injectable, UnauthorizedException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { Repository } from 'typeorm';
 import { compare } from 'bcryptjs';
-import { sign } from 'jsonwebtoken';
+import { JwtService } from '@nestjs/jwt';
+import { Repository } from 'typeorm';
 
 import { UserModel } from 'src/models/user.model';
-import { SessionSchema } from 'src/schemas/sessions.schema';
+import { UsersService } from '../users/users.service';
 
 @Injectable()
 export class AuthService {
   constructor(
-    @InjectRepository(UserModel) private model: Repository<UserModel>
+    @InjectRepository(UserModel) private model: Repository<UserModel>,
+    private usersService: UsersService,
+    private jwtService: JwtService
   ) {}
 
-  async login(data: SessionSchema): Promise<string> {
-    const user = await this.model.findOne({
-      where: { email: data.email },
-    });
+  async validateUser(email: string, password: string): Promise<any> {
+    const user = await this.model.findOne({ where: { email } });
 
     if (!user) {
-      throw new NotFoundException({
-        description: 'User with this credentials not found.',
+      throw new UnauthorizedException({
+        description: 'Credentials not valid.',
       });
     }
 
-    const passwordMatch = await compare(data.password, user.password);
+    const passwordMatch = await compare(password, user.password);
 
-    if (!passwordMatch) {
-      throw new NotFoundException({
-        description: 'User with this credentials not found.',
+    if (passwordMatch) {
+      const { password, ...result } = user;
+      return result;
+    } else {
+      throw new UnauthorizedException({
+        description: 'Credentials not valid.',
       });
     }
+  }
 
-    const token = sign({}, (process.env.SECRET as string) || 'default', {
-      subject: user.id,
-      expiresIn: '1d',
-    });
-
-    return token;
+  async login(user: any) {
+    const payload = { email: user.email, sub: user.userId };
+    return {
+      access_token: this.jwtService.sign(payload),
+    };
   }
 }
