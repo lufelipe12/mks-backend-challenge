@@ -8,11 +8,13 @@ import {
   Patch,
   Post,
 } from '@nestjs/common';
+import { ApiTags } from '@nestjs/swagger';
 import { instanceToPlain } from 'class-transformer';
 
 import { UserSchema, UserUpdateSchema } from 'src/schemas/user.schema';
 import { UsersService } from 'src/services/users/users.service';
 
+@ApiTags('Users')
 @Controller('/users')
 export class UsersController {
   constructor(private readonly usersService: UsersService) {}
