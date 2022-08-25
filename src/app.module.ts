@@ -7,7 +7,6 @@ import { typeOrmAsyncConfig } from './config/typeOrm-config';
 import { AuthModule } from './modules/auth.module';
 import { MoviesModule } from './modules/movie.module';
 import { UsersModule } from './modules/user.module';
-import { MoviesService } from './services/movies/movies.service';
 
 @Module({
   imports: [
@@ -17,6 +16,6 @@ import { MoviesService } from './services/movies/movies.service';
     TypeOrmModule.forRootAsync(typeOrmAsyncConfig),
   ],
   controllers: [AppController],
-  providers: [AppService, MoviesService],
+  providers: [AppService],
 })
 export class AppModule {}
