@@ -1,8 +1,9 @@
-import { Injectable, UnauthorizedException } from '@nestjs/common';
+import { Inject, Injectable, UnauthorizedException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { compare } from 'bcryptjs';
 import { JwtService } from '@nestjs/jwt';
 import { Repository } from 'typeorm';
+import { ConfigService } from '@nestjs/config';
 
 import { UserModel } from 'src/models/user.model';
 import { UsersService } from '../users/users.service';

@@ -2,7 +2,7 @@ import { Exclude } from 'class-transformer';
 import { Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
 import { v4 as uuid } from 'uuid';
 
-@Entity()
+@Entity('users')
 export class UserModel {
   @PrimaryGeneratedColumn('uuid')
   readonly id: string;
@@ -16,10 +16,4 @@ export class UserModel {
   @Exclude()
   @Column()
   password: string;
-
-  constructor() {
-    if (!this.id) {
-      this.id = uuid();
-    }
-  }
 }
