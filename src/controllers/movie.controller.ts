@@ -9,13 +9,14 @@ import {
   Post,
   UseGuards,
 } from '@nestjs/common';
-import { ApiTags } from '@nestjs/swagger';
+import { ApiBearerAuth, ApiTags } from '@nestjs/swagger';
 
 import { JwtAuthGuard } from 'src/guards/jwtAuth.guard';
 import { MovieSchema, MovieUpdateSchema } from 'src/schemas/movie.schema';
 import { MoviesService } from 'src/services/movies/movies.service';
 
 @ApiTags('Movies')
+@ApiBearerAuth()
 @Controller('/movies')
 @UseGuards(JwtAuthGuard)
 export class MoviesController {

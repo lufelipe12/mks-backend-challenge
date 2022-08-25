@@ -9,12 +9,15 @@ import { LocalStrategy } from 'src/strategies/local.strategy';
 import { JwtStategy } from 'src/strategies/jwt.strategy';
 import { UsersService } from 'src/services/users/users.service';
 import { SessionsController } from 'src/controllers/session.controller';
+import { ConfigModule } from '@nestjs/config';
+
 @Module({
   imports: [
+    ConfigModule.forRoot(),
     TypeOrmModule.forFeature([UserModel]),
     PassportModule,
     JwtModule.register({
-      secret: process.env.SECRET_KEY as string,
+      secret: process.env.SECRET_KEY,
       signOptions: { expiresIn: '1d' },
     }),
   ],
