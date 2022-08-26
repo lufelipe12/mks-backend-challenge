@@ -38,8 +38,9 @@
 - Postgresql 
 - Heroku
 
+## Documentation
 
-## Instalation and running the app
+## Instalation and running the app locally
 
 Assuming you have postgresql and redis on your computer locally run the following commands:
 
