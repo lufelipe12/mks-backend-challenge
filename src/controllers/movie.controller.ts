@@ -8,6 +8,9 @@ import {
   Patch,
   Post,
   UseGuards,
+  CacheInterceptor,
+  UseInterceptors,
+  CacheTTL,
 } from '@nestjs/common';
 import { ApiBearerAuth, ApiTags } from '@nestjs/swagger';
 
@@ -29,6 +32,8 @@ export class MoviesController {
     return newMovie;
   }
 
+  @UseInterceptors(CacheInterceptor)
+  @CacheTTL(30)
   @Get()
   public async index() {
     const movies = await this.moviesService.getAll();
