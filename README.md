@@ -82,11 +82,11 @@ In both cases, if everything goes well, you can access the documentation through
 
 ## Experience
 
-- TypeScript - 3 meses.
-- Nest.js - Primeiro projeto.
-- TypeORM - 4 meses.
-- Swagger - 2 meses.
-- Docker - 4 meses.
-- Redis - Primeiro projeto.
-- Postgresql - 4 meses.
-- Heroku - 4 meses.
+- TypeScript - 3 months.
+- Nest.js - First project.
+- TypeORM - 4 months.
+- Swagger - 2 months.
+- Docker - 4 months.
+- Redis - First project.
+- Postgresql - 4 months.
+- Heroku - 4 months.
