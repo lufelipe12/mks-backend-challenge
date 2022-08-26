@@ -3,12 +3,12 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { PassportModule } from '@nestjs/passport';
 import { JwtModule } from '@nestjs/jwt';
 
-import { UserModel } from 'src/models/user.model';
+import { UserModel } from '../models/user.model';
 import { AuthService } from '../services/sessions/auth.service';
-import { LocalStrategy } from 'src/strategies/local.strategy';
-import { JwtStategy } from 'src/strategies/jwt.strategy';
-import { UsersService } from 'src/services/users/users.service';
-import { SessionsController } from 'src/controllers/session.controller';
+import { LocalStrategy } from '../strategies/local.strategy';
+import { JwtStategy } from '../strategies/jwt.strategy';
+import { UsersService } from '../services/users/users.service';
+import { SessionsController } from '../controllers/session.controller';
 import { ConfigModule } from '@nestjs/config';
 
 @Module({

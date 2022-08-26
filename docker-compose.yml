@@ -6,6 +6,9 @@ services:
     build:
       context: .
       dockerfile: Dockerfile
+    volumes:
+      - ./app
+      - /app/node_modules
     ports:
       - 3000:3000
     command: ['./docker-entrypoint.sh']
@@ -15,8 +18,12 @@ services:
       - DB_USERNAME=pandim
       - DB_NAME=test1
       - DB_PASSWORD=12345
+      - REDIS_HOST=redis
+      - REDIS_PORT=6379
     depends_on:
       - db
+    links:
+      - redis
 
   db:
     container_name: db
