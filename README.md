@@ -24,21 +24,27 @@
 
 ## Description
 
-[Nest](https://github.com/nestjs/nest) framework TypeScript starter repository.
+[Nest](https://github.com/nestjs/nest) framework TypeScript repository. This work was done for a technical test. The goal is to create a book catalog when the user is authenticated.
 
-## Installation
+## Technologies
 
-```bash
-$ yarn
-```
+- TypeScript 
+- Nest.js 
+- TypeORM
+- Swagger
+- Docker
+- Redis
+- Postgresql 
+- Heroku
 
-## Running the app
+
+## Instalation and running the app
 
 Assuming you have postgresql and redis on your computer locally run the following commands:
 
 ```bash
 #to install dependencies
-yarn
+$ yarn
 
 # to start in development
 $ yarn start
@@ -69,7 +75,7 @@ To run the application with docker, first you need to deactivate postgresql if i
 
 ```bash
 # to run docker-compose
-docker-compose up -d
+$ docker-compose up -d
 ```
 
 In both cases, if everything goes well, you can access the documentation through: localhost:3000/api/
@@ -83,3 +89,4 @@ In both cases, if everything goes well, you can access the documentation through
 - Docker - 4 meses.
 - Redis - Primeiro projeto.
 - Postgresql - 4 meses.
+- Heroku - 4 meses.
