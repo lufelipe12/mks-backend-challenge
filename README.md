@@ -31,6 +31,7 @@
 - TypeScript 
 - Nest.js 
 - TypeORM
+- JWT
 - Swagger
 - Docker
 - Redis
@@ -85,6 +86,7 @@ In both cases, if everything goes well, you can access the documentation through
 - TypeScript - 3 months.
 - Nest.js - First project.
 - TypeORM - 4 months.
+- JWT - 4 months.
 - Swagger - 2 months.
 - Docker - 4 months.
 - Redis - First project.
