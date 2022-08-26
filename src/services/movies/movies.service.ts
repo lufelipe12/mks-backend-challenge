@@ -7,8 +7,8 @@ import {
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 
-import { MovieModel } from 'src/models/movie.model';
-import { MovieSchema, MovieUpdateSchema } from 'src/schemas/movie.schema';
+import { MovieModel } from '../../models/movie.model';
+import { MovieSchema, MovieUpdateSchema } from '../../schemas/movie.schema';
 
 @Injectable()
 export class MoviesService {
