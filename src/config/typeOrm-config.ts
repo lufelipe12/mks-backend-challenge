@@ -11,10 +11,15 @@ export const typeOrmAsyncConfig: TypeOrmModuleAsyncOptions = {
     return {
       type: 'postgres',
       host: process.env.DB_HOST,
-      port: +process.env.DB_PORT,
-      username: process.env.DB_USERNAME,
-      password: process.env.DB_PASSWORD,
-      database: process.env.DB_NAME,
+      url: process.env.DATABASE_URL,
+      // port: +process.env.DB_PORT,
+      // username: process.env.DB_USERNAME,
+      // password: process.env.DB_PASSWORD,
+      // database: process.env.DB_NAME,
+      ssl:
+        process.env.NODE_ENV === 'production'
+          ? { rejectUnauthorized: false }
+          : false,
       synchronize: false,
       logging: true,
       entities: [__dirname + '/../**/*.model.{js,ts}'],
@@ -32,10 +37,15 @@ export const typeOrmAsyncConfig: TypeOrmModuleAsyncOptions = {
 export const typeOrmConfig: TypeOrmModuleOptions = {
   type: 'postgres',
   host: process.env.DB_HOST,
-  port: +process.env.DB_PORT,
-  username: process.env.DB_USERNAME,
-  database: process.env.DB_NAME,
-  password: process.env.DB_PASSWORD,
+  url: process.env.DATABASE_URL,
+  // port: +process.env.DB_PORT,
+  // username: process.env.DB_USERNAME,
+  // database: process.env.DB_NAME,
+  // password: process.env.DB_PASSWORD,
+  ssl:
+    process.env.NODE_ENV === 'production'
+      ? { rejectUnauthorized: false }
+      : false,
   entities: [__dirname + '/../**/*.model.{js,ts}'],
   migrations: [__dirname + '/../migrations/*{.ts,.js}'],
   cli: {
