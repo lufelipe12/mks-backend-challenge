@@ -34,14 +34,20 @@ $ yarn
 
 ## Running the app
 
+Assuming you have postgresql and redis on your computer locally run the following commands:
+
 ```bash
-# development
+#to install dependencies
+yarn
+
+```bash
+# to start in development
 $ yarn start
 
-# watch mode
+# to start in watch mode
 $ yarn start:dev
 
-# production mode
+# to start in production mode
 $ yarn start:prod
 ```
 
@@ -57,6 +63,16 @@ $ yarn test:e2e
 # test coverage
 $ yarn test:cov
 ```
+
+## Running with docker
+
+To run the application with docker, first you need to deactivate postgresql if it's activated, then run the following commands:
+
+```bash
+# to run docker-compose
+docker-compose up -d
+
+In both cases, if everything goes well, you can access the documentation through: localhost:3000/api/
 
 ## Support
 
