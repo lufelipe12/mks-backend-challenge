@@ -38,7 +38,13 @@
 - Postgresql 
 - Heroku
 
+## Deployment
+
+https://mks-backend-challenge-lf.herokuapp.com/
+
 ## Documentation
+
+https://mks-backend-challenge-lf.herokuapp.com/api#/
 
 ## Instalation and running the app locally
 
