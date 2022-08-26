@@ -1,0 +1,29 @@
+version: '3.9'
+
+services:
+  api:
+    container_name: mks-api
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - 3000:3000
+    environment:
+      - DB_HOST=db
+      - DB_PORT=5432
+      - DB_USERNAME=pandim
+      - DB_NAME=test1
+      - DB_PASSWORD=12345
+    depends_on:
+      - db
+
+  db:
+    container_name: db
+    image: postgres:12
+    restart: always
+    ports:
+      - 5432:5432
+    environment:
+      - POSTGRES_USER=pandim
+      - POSTGRES_PASSWORD=12345
+      - POSTGRES_DB=test1
