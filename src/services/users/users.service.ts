@@ -8,8 +8,8 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { hash } from 'bcryptjs';
 
-import { UserModel } from 'src/models/user.model';
-import { UserSchema, UserUpdateSchema } from 'src/schemas/user.schema';
+import { UserModel } from '../../models/user.model';
+import { UserSchema, UserUpdateSchema } from '../../schemas/user.schema';
 
 @Injectable()
 export class UsersService {

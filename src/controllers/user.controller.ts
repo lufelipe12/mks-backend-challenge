@@ -11,8 +11,8 @@ import {
 import { ApiTags } from '@nestjs/swagger';
 import { instanceToPlain } from 'class-transformer';
 
-import { UserSchema, UserUpdateSchema } from 'src/schemas/user.schema';
-import { UsersService } from 'src/services/users/users.service';
+import { UserSchema, UserUpdateSchema } from '../schemas/user.schema';
+import { UsersService } from '../services/users/users.service';
 
 @ApiTags('Users')
 @Controller('/users')

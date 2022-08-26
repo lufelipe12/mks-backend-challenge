@@ -14,9 +14,9 @@ import {
 } from '@nestjs/common';
 import { ApiBearerAuth, ApiTags } from '@nestjs/swagger';
 
-import { JwtAuthGuard } from 'src/guards/jwtAuth.guard';
-import { MovieSchema, MovieUpdateSchema } from 'src/schemas/movie.schema';
-import { MoviesService } from 'src/services/movies/movies.service';
+import { JwtAuthGuard } from '../guards/jwtAuth.guard';
+import { MovieSchema, MovieUpdateSchema } from '../schemas/movie.schema';
+import { MoviesService } from '../services/movies/movies.service';
 
 @ApiTags('Movies')
 @ApiBearerAuth()
