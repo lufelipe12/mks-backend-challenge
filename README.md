@@ -54,6 +54,9 @@ Assuming you have postgresql and redis on your computer locally run the followin
 #to install dependencies
 $ yarn
 
+#to run migrations
+$ yarn migration:run
+
 # to start in development
 $ yarn start
 
